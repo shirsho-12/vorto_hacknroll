@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:pdf_text/pdf_text.dart';
 import 'package:project_hackathon/constants.dart';
 
 import '../output/result.dart';
@@ -15,8 +14,9 @@ class UploadBody extends StatefulWidget {
 }
 
 class _UploadBodyState extends State<UploadBody> {
-  FilePickerResult? result;
-  String docText = "";
+  // FilePickerResult? result;
+  // String docText = "";
+  File? file;
 
   // // method to get the text from pdf
   // Future<String> getSummaryFromFile() async {
@@ -63,12 +63,13 @@ class _UploadBodyState extends State<UploadBody> {
               if (inputFile != null) {
                 File file = File(inputFile.files.single.path!);
 
-                PDFDoc doc = await PDFDoc.fromFile(file);
-                String text = await doc.text;
+                // PDFDoc doc = await PDFDoc.fromFile(file);
+                // String text = await doc.text;
 
                 setState(() {
-                  result = inputFile;
-                  docText = text;
+                  // result = inputFile;
+                  // docText = text;
+                  file = file;
                 });
 
                 // print(docText);
@@ -94,9 +95,10 @@ class _UploadBodyState extends State<UploadBody> {
           ),
 
           //display file name
-          if (result != null)
+          if (file != null)
             Text(
-              result!.files.single.name,
+              // result!.files.single.name,
+              file!.path.split('/').last,
               style: const TextStyle(
                   color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),
             ),
@@ -109,10 +111,14 @@ class _UploadBodyState extends State<UploadBody> {
               // final summarizer = SummarizerRestClient(docText: docText);
               // final summary = await summarizer.getSummaryFromFile();
               // print(summary);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Result(text: docText)));
+              if (file != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Result(file: file!)));
+              } else {
+                // devtoo('No file selected');
+              }
             },
             child: Container(
                 padding:

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project_hackathon/constants.dart';
 import 'package:project_hackathon/ml/summarizer.dart';
@@ -6,8 +8,9 @@ import 'package:project_hackathon/pages/output/resultBody.dart';
 import '../loading.dart';
 
 class Result extends StatefulWidget {
-  final String text;
-  const Result({Key? key, required this.text}) : super(key: key);
+  // final String text;
+  final File file;
+  const Result({Key? key, required this.file}) : super(key: key);
 
   @override
   State<Result> createState() => _ResultState();
@@ -40,7 +43,7 @@ class _ResultState extends State<Result> {
         ],
       ),
       body: FutureBuilder<String>(
-          future: SummarizerRestClient.getSummaryFromFile(widget.text),
+          future: SummarizerRestClient.getSummaryFromPDF(widget.file),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingScreen());
