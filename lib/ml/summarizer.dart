@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdf_text/pdf_text.dart';
 
