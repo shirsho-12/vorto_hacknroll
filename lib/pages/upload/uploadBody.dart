@@ -34,7 +34,7 @@ class _UploadBodyState extends State<UploadBody> {
           const Text(
             'Vorto',
             style: TextStyle(
-                fontSize: 60,
+                fontSize: 70,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.bold),
           ),
@@ -51,10 +51,10 @@ class _UploadBodyState extends State<UploadBody> {
 
           const Text(
             'Upload your file here',
-            style: TextStyle(fontSize: 30, fontFamily: 'Poppins'),
+            style: TextStyle(fontSize: 25, fontFamily: 'Poppins'),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
 
           TextButton(
             onPressed: () async {
@@ -81,16 +81,16 @@ class _UploadBodyState extends State<UploadBody> {
             },
             child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: kTextColor, width: 2),
+                  border: Border.all(color: Colors.grey, width: 2),
                 ),
                 child: const Text(
-                  'Select',
+                  'Select...',
                   style: TextStyle(
-                      fontSize: 20, color: kTextColor, fontFamily: 'Poppins'),
+                      fontSize: 20, color: kTextColor, fontFamily: 'Poppins',),
                 )),
           ),
 
@@ -103,7 +103,7 @@ class _UploadBodyState extends State<UploadBody> {
                   color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),
             ),
 
-          const SizedBox(height: 80),
+          const SizedBox(height: 45),
 
           TextButton(
             onPressed: () async {
@@ -131,7 +131,7 @@ class _UploadBodyState extends State<UploadBody> {
                     ],
                   ),
                   borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: kTextColor, width: 2),
+                  border: Border.all(color: kPrimaryColor, width: 2),
                 ),
                 child: const Text(
                   'Generate ',

@@ -142,6 +142,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
+  image_utils_class:
+    dependency: "direct main"
+    description:
+      name: image_utils_class
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   js:
     dependency: transitive
     description:
