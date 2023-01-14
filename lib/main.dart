@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_hackathon/constants.dart';
+import 'package:project_hackathon/pages/upload/upload.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Vorto',
       theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: kBackgroundColor,
+        colorScheme: const ColorScheme.light().copyWith(primary: kPrimaryColor),        
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.black),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
+      home: Upload(),
       
     );
       
