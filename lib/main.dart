@@ -17,14 +17,11 @@ class MyApp extends StatelessWidget {
       title: 'Vorto',
       theme: ThemeData(
         scaffoldBackgroundColor: kBackgroundColor,
-        colorScheme: const ColorScheme.light().copyWith(primary: kPrimaryColor),        
+        colorScheme: const ColorScheme.light().copyWith(primary: kPrimaryColor),
         textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.black),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-
-      home: Upload(),
-      
+      home: const Upload(),
     );
-      
   }
 }

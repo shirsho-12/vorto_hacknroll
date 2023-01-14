@@ -15,10 +15,13 @@ class _ResultState extends State<Result> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Vorto', style: TextStyle(color: kTextColor, fontSize: 40, fontFamily: 'Poppins'), ),
+        title: const Text(
+          'Vorto',
+          style:
+              TextStyle(color: kTextColor, fontSize: 40, fontFamily: 'Poppins'),
+        ),
       ),
-      body: ResultBody(),
+      body: const ResultBody(),
     );
   }
 }
-
