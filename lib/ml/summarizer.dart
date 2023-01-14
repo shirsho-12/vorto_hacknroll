@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdf_text/pdf_text.dart';
 
@@ -31,31 +30,31 @@ class SummarizerRestClient {
   static Future<String> getSummaryFromFile(String text) async {
     final response = await http.post(
       Uri.parse("https://api.meaningcloud.com/summarization-1.0"),
-      body: {        
+      body: {
         'key': "cfabb09ccf4d02cbe647f19c0593fc35",
         'txt': text,
         'lang': "en",
         'sentences': '6',
       },
     );
-    print(response);
+    // print(response);
 
     return response.body;
   }
 
   static Future<String> getSummaryFromPDF(File file) async {
     PDFDoc doc = await PDFDoc.fromFile(file);
-                String text = await doc.text;
+    String text = await doc.text;
     final response = await http.post(
       Uri.parse("https://api.meaningcloud.com/summarization-1.0"),
-      body: {        
+      body: {
         'key': "cfabb09ccf4d02cbe647f19c0593fc35",
         'txt': text,
         'lang': "en",
         'sentences': '6',
       },
     );
-    print(response);
+    // print(response);
 
     return response.body;
   }

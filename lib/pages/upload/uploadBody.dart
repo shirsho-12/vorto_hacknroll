@@ -1,22 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:project_hackathon/constants.dart';
-import 'package:project_hackathon/ml/summarizer.dart';
-import 'package:project_hackathon/pages/loading.dart';
 
 import '../output/result.dart';
-
-
 
 class UploadBody extends StatefulWidget {
   const UploadBody({Key? key}) : super(key: key);
 
   @override
-  _UploadBodyState createState() => _UploadBodyState();
+  State<UploadBody> createState() => _UploadBodyState();
 }
 
 class _UploadBodyState extends State<UploadBody> {
@@ -30,7 +25,6 @@ class _UploadBodyState extends State<UploadBody> {
   //   return summary;
   // }
 
-  
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -39,13 +33,16 @@ class _UploadBodyState extends State<UploadBody> {
         children: <Widget>[
           const Text(
             'Vorto',
-            style: TextStyle(fontSize: 60, fontFamily: 'Poppins', fontWeight: FontWeight.bold ),
+            style: TextStyle(
+                fontSize: 60,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.bold),
           ),
-
 
           const Text(
             'Notes to slides',
-            style: TextStyle(fontSize: 20, color:Colors.grey, fontFamily: 'Poppins'),
+            style: TextStyle(
+                fontSize: 20, color: Colors.grey, fontFamily: 'Poppins'),
           ),
 
           const SizedBox(
@@ -58,45 +55,51 @@ class _UploadBodyState extends State<UploadBody> {
           ),
 
           const SizedBox(height: 20),
-          
+
           TextButton(
             onPressed: () async {
-
-              FilePickerResult? input_file = await FilePicker.platform.pickFiles();
-              if(input_file != null) {
-
-                File file = File(input_file!.files.single.path!);
+              FilePickerResult? inputFile =
+                  await FilePicker.platform.pickFiles();
+              if (inputFile != null) {
+                File file = File(inputFile.files.single.path!);
 
                 PDFDoc doc = await PDFDoc.fromFile(file);
                 String text = await doc.text;
-                
+
                 setState(() {
-                  result = input_file;
+                  result = inputFile;
                   docText = text;
                 });
-                
-                print(docText);
-                print(doc.length);
-                print('File inputted');
+
+                // print(docText);
+                // print(doc.length);
+                // print('File inputted');
               } else {
                 // User canceled the picker
               }
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: kTextColor, width: 2),
-              ),
-
-              child: const Text('Select', style: TextStyle(fontSize: 20, color: kTextColor, fontFamily: 'Poppins'),)
-              ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: kTextColor, width: 2),
+                ),
+                child: const Text(
+                  'Select',
+                  style: TextStyle(
+                      fontSize: 20, color: kTextColor, fontFamily: 'Poppins'),
+                )),
           ),
 
           //display file name
-          if(result != null) Text(result!.files.single.name, style: TextStyle(color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),),
-   
+          if (result != null)
+            Text(
+              result!.files.single.name,
+              style: const TextStyle(
+                  color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),
+            ),
 
           const SizedBox(height: 80),
 
@@ -106,25 +109,30 @@ class _UploadBodyState extends State<UploadBody> {
               // final summarizer = SummarizerRestClient(docText: docText);
               // final summary = await summarizer.getSummaryFromFile();
               // print(summary);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Result(text: docText)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Result(text: docText)));
             },
-
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color.fromARGB(255, 0, 0, 0), Color.fromARGB(255, 122, 122, 122)],
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 0, 0, 0),
+                      Color.fromARGB(255, 122, 122, 122)
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(color: kTextColor, width: 2),
                 ),
-                borderRadius: BorderRadius.circular(40),
-                border: Border.all(color: kTextColor, width: 2),
-              ),
-              child: const Text('Generate ', style: TextStyle(fontSize: 30, color: Colors.white, fontFamily: 'Poppins'),)
-              ),
-            ),
-          
-
-          
-
+                child: const Text(
+                  'Generate ',
+                  style: TextStyle(
+                      fontSize: 30, color: Colors.white, fontFamily: 'Poppins'),
+                )),
+          ),
         ],
       ),
     );
