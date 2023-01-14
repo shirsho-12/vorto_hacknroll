@@ -16,7 +16,7 @@ class UploadBody extends StatefulWidget {
 class _UploadBodyState extends State<UploadBody> {
   // FilePickerResult? result;
   // String docText = "";
-  File? file;
+  File? Afile;
 
   // // method to get the text from pdf
   // Future<String> getSummaryFromFile() async {
@@ -69,7 +69,7 @@ class _UploadBodyState extends State<UploadBody> {
                 setState(() {
                   // result = inputFile;
                   // docText = text;
-                  file = file;
+                  Afile = file;
                 });
 
                 // print(docText);
@@ -95,10 +95,10 @@ class _UploadBodyState extends State<UploadBody> {
           ),
 
           //display file name
-          if (file != null)
+          if (Afile != null)
             Text(
               // result!.files.single.name,
-              file!.path.split('/').last,
+              Afile!.path.split('/').last,
               style: const TextStyle(
                   color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),
             ),
@@ -111,11 +111,11 @@ class _UploadBodyState extends State<UploadBody> {
               // final summarizer = SummarizerRestClient(docText: docText);
               // final summary = await summarizer.getSummaryFromFile();
               // print(summary);
-              if (file != null) {
+              if (Afile != null) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Result(file: file!)));
+                        builder: (context) => Result(file: Afile!)));
               } else {
                 // devtoo('No file selected');
               }
