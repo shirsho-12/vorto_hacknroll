@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project_hackathon/constants.dart';
 
 
@@ -17,29 +17,32 @@ class _ResultBodyState extends State<ResultBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+    return ListView(
+      children: [
+        CarouselSlider(items: [
+          Container(
+            margin: EdgeInsets.all(8),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.black, width: 2),
+              
+            ),
 
-          TextButton(
-            onPressed: () {
-
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: kTextColor, width: 2),
-              ),
-
-              child: const Text('Download', style: TextStyle(fontSize: 20, color: kTextColor, fontFamily: 'Poppins'),)
-              ),
-          ),
-
-        ],
-      ),
+            child: Text('Page 1'),
+          )
+        ], 
+        options: CarouselOptions(
+          height: MediaQuery.of(context).size.height- 100,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+        )
+        )
+      ],
     );
   }    
   

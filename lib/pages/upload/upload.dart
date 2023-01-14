@@ -16,7 +16,13 @@ class _UploadState extends State<Upload> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Vorto', style: TextStyle(color: kTextColor, fontSize: 40, fontFamily: 'Poppins'), ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: kTextColor, size: 30,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
       ),
       body: UploadBody(),
     );

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:project_hackathon/constants.dart';
+import 'package:project_hackathon/pages/loading.dart';
 
 import '../output/result.dart';
 
@@ -25,8 +26,14 @@ class _UploadBodyState extends State<UploadBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Text(
-            'Notes to Slides',
+            'Vorto',
             style: TextStyle(fontSize: 50, fontFamily: 'Poppins', fontWeight: FontWeight.bold ),
+          ),
+
+
+          const Text(
+            'Notes to slides',
+            style: TextStyle(fontSize: 25, color:Colors.grey, fontFamily: 'Poppins'),
           ),
 
           const SizedBox(
@@ -74,7 +81,7 @@ class _UploadBodyState extends State<UploadBody> {
 
           TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const Result()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoadingScreen()));
             },
 
             child: Container(
@@ -86,7 +93,7 @@ class _UploadBodyState extends State<UploadBody> {
                 borderRadius: BorderRadius.circular(40),
                 border: Border.all(color: kTextColor, width: 2),
               ),
-              child: const Text('Generate', style: TextStyle(fontSize: 30, color: Colors.white, fontFamily: 'Poppins'),)
+              child: const Text('Generate ', style: TextStyle(fontSize: 30, color: Colors.white, fontFamily: 'Poppins'),)
               ),
             ),
           

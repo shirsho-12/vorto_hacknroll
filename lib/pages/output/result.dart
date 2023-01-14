@@ -15,7 +15,18 @@ class _ResultState extends State<Result> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        leadingWidth: 0,
         title: const Text('Vorto', style: TextStyle(color: kTextColor, fontSize: 40, fontFamily: 'Poppins'), ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home, color: Colors.black, size: 30,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        
       ),
       body: ResultBody(),
     );
