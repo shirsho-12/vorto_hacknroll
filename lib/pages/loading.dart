@@ -19,7 +19,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    startTime();
+    // startTime();
   }
   
   @override
@@ -29,15 +29,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
   
-  startTime() async {
-    var duration = const Duration(seconds: 3);
-    return Timer(duration, route);
-  } route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => Result()
-      )
-    ); 
-  }
+  // startTime() async {
+  //   var duration = const Duration(seconds: 3);
+  //   return Timer(duration, route);
+  // } route() {
+  //   Navigator.pushReplacement(context, MaterialPageRoute(
+  //       builder: (context) => Result()
+  //     )
+  //   ); 
+  // }
   
   initScreen(BuildContext context) {
     return Scaffold(

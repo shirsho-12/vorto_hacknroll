@@ -7,31 +7,47 @@ import 'package:project_hackathon/constants.dart';
 
 
 class ResultBody extends StatefulWidget {
-  const ResultBody({Key? key}) : super(key: key);
+  final String summary;
+  const ResultBody({Key? key, required this.summary}) : super(key: key);
 
   @override
   _ResultBodyState createState() => _ResultBodyState();
 }
 
 class _ResultBodyState extends State<ResultBody> {
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         CarouselSlider(items: [
           Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black, width: 2),
-              
+              border: Border.all(color: Colors.black, width: 2),              
             ),
 
-            child: Text('Page 1'),
-          )
-        ], 
+            child: Column(
+              children: [
+                const Text(
+                  'Topic',
+                  style: TextStyle(fontSize: 30, fontFamily: 'Poppins'),
+                ),
+                const SizedBox(height: 20),
+                
+                 Text(
+                  widget.summary,
+                  // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+                  style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
+                ),
+              ],
+            ),
+            ),
+        ],
+          
+         
         options: CarouselOptions(
           height: MediaQuery.of(context).size.height- 100,
           autoPlay: true,

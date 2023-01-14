@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:pdf_text/pdf_text.dart';
 import 'package:project_hackathon/constants.dart';
+import 'package:project_hackathon/ml/summarizer.dart';
 import 'package:project_hackathon/pages/loading.dart';
 
 import '../output/result.dart';
@@ -18,6 +21,15 @@ class UploadBody extends StatefulWidget {
 
 class _UploadBodyState extends State<UploadBody> {
   FilePickerResult? result;
+  String docText = "";
+
+  // // method to get the text from pdf
+  // Future<String> getSummaryFromFile() async {
+  //   final summarizer = SummarizerRestClient(docText: docText);
+  //   final summary = await summarizer.getSummaryFromFile();
+  //   return summary;
+  // }
+
   
   @override
   Widget build(BuildContext context) {
@@ -27,17 +39,17 @@ class _UploadBodyState extends State<UploadBody> {
         children: <Widget>[
           const Text(
             'Vorto',
-            style: TextStyle(fontSize: 50, fontFamily: 'Poppins', fontWeight: FontWeight.bold ),
+            style: TextStyle(fontSize: 60, fontFamily: 'Poppins', fontWeight: FontWeight.bold ),
           ),
 
 
           const Text(
             'Notes to slides',
-            style: TextStyle(fontSize: 25, color:Colors.grey, fontFamily: 'Poppins'),
+            style: TextStyle(fontSize: 20, color:Colors.grey, fontFamily: 'Poppins'),
           ),
 
           const SizedBox(
-            height: 50,
+            height: 90,
           ),
 
           const Text(
@@ -52,10 +64,19 @@ class _UploadBodyState extends State<UploadBody> {
 
               FilePickerResult? input_file = await FilePicker.platform.pickFiles();
               if(input_file != null) {
+
+                File file = File(input_file!.files.single.path!);
+
+                PDFDoc doc = await PDFDoc.fromFile(file);
+                String text = await doc.text;
+                
                 setState(() {
                   result = input_file;
+                  docText = text;
                 });
-                File file = File(input_file!.files.single.path!);
+                
+                print(docText);
+                print(doc.length);
                 print('File inputted');
               } else {
                 // User canceled the picker
@@ -77,18 +98,22 @@ class _UploadBodyState extends State<UploadBody> {
           if(result != null) Text(result!.files.single.name, style: TextStyle(color: Colors.grey, fontSize: 12, fontFamily: 'Poppins'),),
    
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 80),
 
           TextButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LoadingScreen()));
+            onPressed: () async {
+              // print(docText);
+              // final summarizer = SummarizerRestClient(docText: docText);
+              // final summary = await summarizer.getSummaryFromFile();
+              // print(summary);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Result(text: docText)));
             },
 
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Colors.black, Color(0xFF434343)],
+                  colors: [Color.fromARGB(255, 0, 0, 0), Color.fromARGB(255, 122, 122, 122)],
                 ),
                 borderRadius: BorderRadius.circular(40),
                 border: Border.all(color: kTextColor, width: 2),

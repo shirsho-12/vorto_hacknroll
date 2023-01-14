@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project_hackathon/constants.dart';
 import 'package:project_hackathon/pages/upload/uploadBody.dart';
@@ -19,12 +21,12 @@ class _UploadState extends State<Upload> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: kTextColor, size: 30,),
           onPressed: () {
-            Navigator.pop(context);
+            exit(0);
           },
         ),
 
       ),
-      body: UploadBody(),
+      body: const UploadBody(),
     );
   }
 }

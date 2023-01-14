@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project_hackathon/constants.dart';
+import 'package:project_hackathon/ml/summarizer.dart';
 import 'package:project_hackathon/pages/output/resultBody.dart';
 
+import '../loading.dart';
+
 class Result extends StatefulWidget {
-  const Result({Key? key}) : super(key: key);
+  final String text;
+  const Result({Key? key, required this.text}) : super(key: key);
 
   @override
   _ResultState createState() => _ResultState();
@@ -12,6 +18,7 @@ class Result extends StatefulWidget {
 class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
+    // File file = File('assets/sample.pdf');
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -28,7 +35,20 @@ class _ResultState extends State<Result> {
         ],
         
       ),
-      body: ResultBody(),
+      body: FutureBuilder<String>(
+        future: SummarizerRestClient.getSummaryFromFile(widget.text),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: LoadingScreen());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error'));
+          } else if (snapshot.hasData) {
+            return ResultBody(summary: snapshot.data!);
+          } else {
+            return const Center(child: Text('No data'));
+          }
+        }
+      ),
     );
   }
 }
