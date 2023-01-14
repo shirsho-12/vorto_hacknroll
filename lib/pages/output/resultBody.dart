@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +14,8 @@ class ResultBody extends StatefulWidget {
   State<ResultBody> createState() => _ResultBodyState();
 }
 
-
 class _ResultBodyState extends State<ResultBody> {
- 
-
-  Future<List<Uint8List>> getImagesFromKeywords(List<String> keywords) async {
-    List<Uint8List> images = [];
-    for (int i = 0; i < keywords.length; i++) {
-      images.add(await TextToImage.getImageFromText(keywords[i]));
-    }
-    return images;
-  }
-
-   @override
+  @override
   Widget build(BuildContext context) {
     Map valueMap = jsonDecode(widget.summary);
     // print(valueMap);
@@ -52,134 +39,179 @@ class _ResultBodyState extends State<ResultBody> {
       titleList.add(keywords[0].toTitleCase());
       print(keywords);
     }
-
-
-  
-
-    // convert Future<uint8list> to Image
-
-
-
     // for (var v in summaryList) {
     //   print(v);
     // }
-    return FutureBuilder<List<Uint8List>>(
-      future: getImagesFromKeywords(titleList),
-      builder: (context, snapshot) {
-        List<Uint8List> images = [];
-        if (snapshot.hasData) {          
-          images = snapshot.data!;
-        } else {
-          images = [Uint8List(0), Uint8List(0), Uint8List(0)];
-        }
-        return ListView(
-          children: [
-            CarouselSlider(
-                items: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-                    padding: const EdgeInsets.all(15),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black, width: 2),
+    return ListView(
+      children: [
+        CarouselSlider(
+            items: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+                padding: const EdgeInsets.all(15),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                     Text(
+                      titleList[0],
+                      style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
                     ),
-                    
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         Text(
-                          titleList[0],
-                          style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 10),
-                        
-                        Image.memory(images[0], height: 200, width: 200,),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(itemBuilder: (context, index) {
-                            return UnorderedListItem(text: summaryList[index]);
+                    const SizedBox(height: 10),
+                    FutureBuilder(
+                      future: GPT3Model.generateImage(titleList[0]),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          print(snapshot.data);
+                          return Image.network(jsonDecode(snapshot.data!)["data"][0]["url"].toString(), height: 200, width: 200,);
+                        }
+                        else if (snapshot.hasError) {
+                          return const Text("Error");
+                        }
+                        else {
+                        return Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.grey[200],
+                          ),
+                         
+                        );
+                        }
+                      }
+                    ),
+                    SizedBox(
+                      height: 300,
+                      child: ListView.builder(itemBuilder: (context, index) {
+                        return UnorderedListItem(text: summaryList[index]);
+                      }, itemCount: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+          
+                  children: [
+                    Text(
+                      titleList[1],
+                      style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
+                    ),
+                   FutureBuilder(
+                      future: GPT3Model.generateImage(titleList[1]),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          print(snapshot.data);
+                          return Image.network(jsonDecode(snapshot.data!)["data"][0]["url"].toString(), height: 200, width: 200,);
+                        }
+                        else if (snapshot.hasError) {
+                          return const Text("Error");
+                        }
+                        else {
+                        return Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.grey[200],
+                          ),
+                         
+                        );
+                        }
+                      }
+                    ),
+                    // Image.asset("assets/images/sample.png", height: 200, width: 200,),
+                    SizedBox(
+                      height: 300,
+                      child: 
+                          ListView.builder(itemBuilder: (context, index) {
+                            return UnorderedListItem(text: summaryList[2 + index]);
                           }, itemCount: 2,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black, width: 2),
-                    ),
-                    
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-              
-                      children: [
-                        Text(
-                          titleList[1],
-                          style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 10),
                         
-                        Image.memory(images[1], height: 200, width: 200,),
-                        SizedBox(
-                          height: 300,
-                          child: 
-                              ListView.builder(itemBuilder: (context, index) {
-                                return UnorderedListItem(text: summaryList[2 + index]);
-                              }, itemCount: 2,
-                              ),
-                            
-                        ),
-              
-                        
-                      ],
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black, width: 2),
-                    ),
+          
                     
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          titleList[2],
-                          style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 10),
-                        Image.memory(images[2], height: 200, width: 200,),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(itemBuilder: (context, index) {
-                            return UnorderedListItem(text: summaryList[4 + index]);
-                          }, itemCount: 2,
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      titleList[2],
+                      style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                   FutureBuilder(
+                      future: GPT3Model.generateImage(titleList[2]),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          print(snapshot.data);
+                          return Image.network(jsonDecode(snapshot.data!)["data"][0]["url"].toString(), height: 200, width: 200,);
+                        }
+                        else if (snapshot.hasError) {
+                          return const Text("Error");
+                        }
+                        else {
+                        return Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.grey[200],
                           ),
-                        ),
-                      ],
+                         
+                        );
+                        }
+                      }
                     ),
-                  ),
-                ],
-                options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height - 100,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  scrollDirection: Axis.horizontal,
-                ))
-          ],
-        );
-      }
+                    SizedBox(
+                      height: 300,
+                      child: ListView.builder(itemBuilder: (context, index) {
+                        return UnorderedListItem(text: summaryList[4 + index]);
+                      }, itemCount: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height - 100,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
+            ))
+      ],
     );
   }
 }
