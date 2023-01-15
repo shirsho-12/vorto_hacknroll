@@ -16,6 +16,9 @@ class ResultBody extends StatefulWidget {
 
 class _ResultBodyState extends State<ResultBody> {
   @override
+  
+
+
   Widget build(BuildContext context) {
     Map valueMap = jsonDecode(widget.summary);
     // print(valueMap);
@@ -62,7 +65,7 @@ class _ResultBodyState extends State<ResultBody> {
                       titleList[0],
                       style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     FutureBuilder(
                       future: GPT3Model.generateImage(titleList[0]),
                       builder: (context, snapshot) {
@@ -86,6 +89,7 @@ class _ResultBodyState extends State<ResultBody> {
                         }
                       }
                     ),
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: 300,
                       child: ListView.builder(itemBuilder: (context, index) {
@@ -113,6 +117,7 @@ class _ResultBodyState extends State<ResultBody> {
                       titleList[1],
                       style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
                     ),
+                    const SizedBox(height: 20),
                    FutureBuilder(
                       future: GPT3Model.generateImage(titleList[1]),
                       builder: (context, snapshot) {
@@ -136,7 +141,7 @@ class _ResultBodyState extends State<ResultBody> {
                         }
                       }
                     ),
-                    // Image.asset("assets/images/sample.png", height: 200, width: 200,),
+                   const SizedBox(height: 20),
                     SizedBox(
                       height: 300,
                       child: 
@@ -146,6 +151,7 @@ class _ResultBodyState extends State<ResultBody> {
                           ),
                         
                     ),
+                  
           
                     
                   ],
@@ -167,7 +173,7 @@ class _ResultBodyState extends State<ResultBody> {
                       titleList[2],
                       style: const TextStyle(fontSize: 25, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                    FutureBuilder(
                       future: GPT3Model.generateImage(titleList[2]),
                       builder: (context, snapshot) {
@@ -191,6 +197,7 @@ class _ResultBodyState extends State<ResultBody> {
                         }
                       }
                     ),
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: 300,
                       child: ListView.builder(itemBuilder: (context, index) {

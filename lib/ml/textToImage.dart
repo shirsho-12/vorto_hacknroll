@@ -26,23 +26,24 @@ class TextToImage{
 
 
 class GPT3Model {
-   static String apiEndPoint = "v1/images/generations";
-  static String base = "api.openai.com";
+  //  static String apiEndPoint = "v1/images/generations";
+  // static String base = "api.openai.com";
   
   static Future<String> generateImage(String text) async {
-    final response = await http.post(Uri.https(base, apiEndPoint), 
-    headers: {
-      // "apiKey" : "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",
-      // "organization" : "org-n1MyOltHgsrGrpEmAOQXBYG1",
-       'Authorization': 'Bearer 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',
-        'Accept': 'application/json',
-        'content-type': 'application/json',
-    },
+    // final response = await http.post(Uri.https(base, apiEndPoint), 
+    // headers: {
+    //   // "apiKey" : "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",
+    //   // "organization" : "org-n1MyOltHgsrGrpEmAOQXBYG1",
+    //    'Authorization': 'Bearer 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',
+    //     'Accept': 'application/json',
+    //     'content-type': 'application/json',
+    // },
+    final response = await http.post(Uri.parse("http://172.31.80.175:2500/main"),
     body: jsonEncode({
-      "prompt": text,
-      "n" : 2,
-      "size" : "256x256",
-      "response_format" : "url",
+      "text": text,
+      // "n" : 2,
+      // "size" : "256x256",
+      // "response_format" : "url",
     }));
     print(response);
     return response.body;
