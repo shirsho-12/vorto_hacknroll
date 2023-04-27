@@ -1,5 +1,7 @@
 # Vorto
 
+Project Demo : https://www.youtube.com/watch?v=eR2k3BF6JG4&t=1s
+
 Ever wondered how many hours you could save TAing if Prof just gave you tutorial slides? Or maybe Zoom through the tedious presentation? That's precisely what we aim to do with Vorto.
 
 ## Pipeline
